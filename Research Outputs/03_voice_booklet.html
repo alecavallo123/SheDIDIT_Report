@@ -1,0 +1,1164 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,800;1,400&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Her Story, Her Journey - #SheFUND Voice Booklet 2026</title>
+<style>
+  :root {
+    --cream: #FFF8F6;
+    --charcoal: #2D2028;
+    --rose: #C4788A;
+    --rose-dark: #A05870;
+    --rose-deep: #7A3855;
+    --rose-light: #FBF0F3;
+    --gold: #D4844A;
+    --gold-light: #F0C098;
+    --sage: #C8A840;
+    --sage-light: #EDE0A8;
+    --coral: #E8956A;
+    --blue-gray: #807791;
+    --blue-light: #EDE8F4;
+    --warm-gray: #6B5560;
+    --gray-light: #9A8088;
+    --gray-200: #E5E7EB;
+    --max-content: 760px;
+  }
+
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: Georgia, 'Times New Roman', serif;
+    background: var(--cream);
+    color: var(--charcoal);
+    line-height: 1.75;
+    overflow-x: hidden;
+  }
+
+  /* ===== SCROLL REVEAL SYSTEM ===== */
+  .reveal {
+    opacity: 0;
+    transform: translateY(30px);
+    transition: opacity 0.6s ease-out, transform 0.6s ease-out;
+  }
+  .reveal.visible {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  .reveal-left {
+    opacity: 0;
+    transform: translateX(-20px);
+    transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+  }
+  .reveal-left.visible {
+    opacity: 1;
+    transform: translateX(0);
+  }
+  .reveal-scale {
+    opacity: 0;
+    transform: scale(0.98);
+    transition: opacity 0.7s ease-out, transform 0.7s ease-out;
+  }
+  .reveal-scale.visible {
+    opacity: 1;
+    transform: scale(1);
+  }
+  .reveal-unfurl {
+    opacity: 0;
+    transform: scaleX(0.95);
+    transition: opacity 0.4s ease-out, transform 0.4s ease-out;
+  }
+  .reveal-unfurl.visible {
+    opacity: 1;
+    transform: scaleX(1);
+  }
+
+  /* Stagger delays for portrait cards */
+  .portrait-card:nth-child(1) { transition-delay: 0ms; }
+  .portrait-card:nth-child(2) { transition-delay: 100ms; }
+  .portrait-card:nth-child(3) { transition-delay: 200ms; }
+
+  /* ===== READING PROGRESS BAR ===== */
+  .progress-bar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    z-index: 1000;
+    pointer-events: none;
+  }
+  .progress-bar-inner {
+    height: 100%;
+    background: linear-gradient(90deg, var(--rose), var(--gold));
+    transform-origin: left;
+    transform: scaleX(0);
+    will-change: transform;
+  }
+
+  /* ===== BACK TO TOP ===== */
+  .back-to-top {
+    position: fixed;
+    bottom: 24px;
+    right: 24px;
+    width: 44px;
+    height: 44px;
+    border-radius: 50%;
+    background: white;
+    box-shadow: 0 2px 12px rgba(0,0,0,0.15);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.3s ease, visibility 0.3s ease, transform 0.2s ease;
+    z-index: 999;
+    border: none;
+    font-size: 1.2rem;
+    color: var(--rose);
+  }
+  .back-to-top.show {
+    opacity: 1;
+    visibility: visible;
+  }
+  .back-to-top:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 16px rgba(0,0,0,0.2);
+  }
+
+  /* ===== COVER ===== */
+  .cover {
+    background: linear-gradient(160deg, #503529 0%, #7A3855 30%, #C4788A 60%, #E8956A 100%);
+    color: white;
+    padding: 5rem 2rem;
+    text-align: center;
+    min-height: 420px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    overflow: hidden;
+  }
+  .cover .cover-sup {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.75rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    opacity: 0.75;
+    margin-bottom: 1rem;
+    opacity: 0;
+    animation: coverFadeIn 0.6s ease-out 0ms forwards;
+  }
+  .cover h1 {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 3.5rem;
+    font-weight: 400;
+    font-style: italic;
+    line-height: 1.15;
+    margin-bottom: 0.5rem;
+    opacity: 0;
+    transform: translateY(20px);
+    animation: coverFadeIn 0.6s ease-out 150ms forwards;
+  }
+  .cover h1 strong {
+    font-style: normal;
+    font-weight: 800;
+    display: block;
+    font-size: 3rem;
+  }
+  .cover .cover-line {
+    width: 60px;
+    height: 3px;
+    background: rgba(255,255,255,0.5);
+    margin: 1.5rem auto;
+    opacity: 0;
+    animation: coverFadeIn 0.6s ease-out 300ms forwards;
+  }
+  .cover .cover-sub {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 1rem;
+    opacity: 0.85;
+    max-width: 560px;
+    margin: 0 auto;
+    line-height: 1.6;
+    opacity: 0;
+    transform: translateY(20px);
+    animation: coverFadeIn 0.6s ease-out 450ms forwards;
+  }
+  @keyframes coverFadeIn {
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ===== ABOUT ===== */
+  .about-section {
+    max-width: var(--max-content);
+    margin: 0 auto;
+    padding: 3rem 2rem;
+  }
+  .about-section p {
+    font-size: 1.05rem;
+    color: var(--warm-gray);
+    margin-bottom: 1rem;
+    line-height: 1.75;
+    text-align: justify;
+  }
+  .about-section p.lead {
+    font-size: 1.2rem;
+    color: var(--charcoal);
+    font-style: italic;
+    border-left: 4px solid var(--gold);
+    padding-left: 1.2rem;
+    margin-bottom: 1.5rem;
+    line-height: 1.75;
+  }
+  .anon-note {
+    background: var(--cream);
+    border: 1px solid var(--gray-200);
+    border-radius: 8px;
+    padding: 1rem 1.2rem;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.82rem;
+    color: var(--gray-light);
+    margin-top: 1rem;
+    line-height: 1.6;
+  }
+  .anon-note strong {
+    color: var(--warm-gray);
+  }
+
+  /* ===== SECTION DIVIDERS ===== */
+  .section-divider {
+    background: linear-gradient(90deg, var(--rose) 0%, var(--gold) 100%);
+    color: white;
+    padding: 1.5rem 2rem;
+    text-align: center;
+  }
+  .section-divider h2 {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.8rem;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    opacity: 0.8;
+    margin-bottom: 0.3rem;
+  }
+  .section-divider p {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 1.3rem;
+    font-weight: 700;
+  }
+
+  /* ===== PORTRAIT CARDS ===== */
+  .portrait {
+    max-width: var(--max-content);
+    margin: 0 auto;
+    padding: 3rem 2rem;
+    border-bottom: 2px solid var(--gray-200);
+  }
+  .portrait:last-of-type {
+    border-bottom: none;
+  }
+  .portrait-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 1.5rem;
+    margin-bottom: 2rem;
+    flex-wrap: wrap;
+  }
+  .portrait-avatar {
+    width: 72px;
+    height: 72px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: rgba(0,0,0,0.25);
+    flex-shrink: 0;
+    transition: transform 0.2s ease;
+  }
+  .portrait-header:hover .portrait-avatar {
+    transform: scale(1.05);
+  }
+  .portrait-avatar.funded { background: var(--sage-light); }
+  .portrait-avatar.nonfunded { background: var(--rose-light); }
+  .portrait-avatar.coaching { background: var(--blue-light); }
+  .portrait-avatar.new { background: var(--gold-light); }
+  .portrait-avatar.stakeholder { background: var(--rose-light); }
+
+  .portrait-meta { flex: 1; }
+  .portrait-badge {
+    display: inline-block;
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.68rem;
+    font-weight: 700;
+    padding: 0.2rem 0.7rem;
+    border-radius: 999px;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    margin-bottom: 0.4rem;
+  }
+  .badge-f { background: var(--sage-light); color: #52704E; }
+  .badge-nf { background: var(--rose-light); color: var(--rose-dark); }
+  .badge-c { background: var(--blue-light); color: var(--blue-gray); }
+  .badge-new { background: var(--gold-light); color: var(--gold); }
+  .badge-s { background: var(--rose-light); color: var(--rose); }
+
+  .portrait-name {
+    font-size: 1.4rem;
+    font-weight: 700;
+    color: var(--charcoal);
+    line-height: 1.3;
+    font-style: italic;
+  }
+  .portrait-descriptor {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.85rem;
+    color: var(--gray-light);
+    margin-top: 0.2rem;
+    line-height: 1.5;
+  }
+
+  .portrait h3 {
+    font-size: 1rem;
+    font-weight: 700;
+    font-family: 'DM Sans', sans-serif;
+    color: var(--rose);
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    margin: 1.5rem 0 0.5rem;
+  }
+  .portrait p {
+    font-size: 1.05rem;
+    color: var(--warm-gray);
+    margin-bottom: 0.8rem;
+    line-height: 1.75;
+    text-align: justify;
+  }
+  .portrait p em {
+    color: var(--charcoal);
+  }
+
+  /* ===== VOICE QUOTES ===== */
+  blockquote.voice {
+    background: white;
+    border-left: 0px solid var(--gold);
+    border-radius: 0 12px 12px 0;
+    padding: 1.2rem 1.5rem;
+    margin: 1.2rem 0;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.06);
+    transition: transform 0.2s ease, box-shadow 0.2s ease, border-left-width 0.3s ease;
+    position: relative;
+  }
+  blockquote.voice.visible-quote {
+    border-left-width: 5px;
+  }
+  blockquote.voice:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  }
+  blockquote.voice p {
+    font-size: 1.05rem;
+    color: var(--charcoal);
+    font-style: italic;
+    margin-bottom: 0.4rem;
+    line-height: 1.7;
+  }
+  blockquote.voice cite {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 0.8rem;
+    font-style: normal;
+    font-weight: 700;
+    color: var(--gold);
+  }
+
+  /* Quote color themes */
+  blockquote.voice.teal { border-left-color: var(--sage); }
+  blockquote.voice.teal cite { color: var(--sage); }
+  blockquote.voice.green { border-left-color: #52704E; }
+  blockquote.voice.green cite { color: #52704E; }
+  blockquote.voice.amber { border-left-color: var(--gold); }
+  blockquote.voice.amber cite { color: var(--gold); }
+  blockquote.voice.blue { border-left-color: var(--blue-gray); }
+  blockquote.voice.blue cite { color: var(--blue-gray); }
+  blockquote.voice.primary { border-left-color: var(--rose); }
+  blockquote.voice.primary cite { color: var(--rose); }
+  blockquote.voice.coral { border-left-color: var(--coral); }
+  blockquote.voice.coral cite { color: var(--coral); }
+
+  /* ===== THEMATIC SECTION ===== */
+  .thematic {
+    max-width: var(--max-content);
+    margin: 0 auto;
+    padding: 3rem 2rem;
+  }
+  .thematic h2 {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 1.4rem;
+    font-weight: 700;
+    border-left: 4px solid var(--gold);
+    padding-left: 1rem;
+    margin-bottom: 1.5rem;
+    color: var(--charcoal);
+  }
+  .theme-block {
+    background: white;
+    border: 1px solid var(--gray-200);
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin-bottom: 1.5rem;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+  }
+  .theme-block h3 {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 1.05rem;
+    font-weight: 700;
+    color: var(--charcoal);
+    margin-bottom: 0.8rem;
+  }
+  .theme-block p {
+    font-size: 0.95rem;
+    color: var(--warm-gray);
+    margin-bottom: 0.8rem;
+    line-height: 1.7;
+  }
+  .theme-block blockquote.voice {
+    margin: 0.8rem 0;
+  }
+  .theme-block blockquote.voice p {
+    font-size: 0.95rem;
+  }
+
+  /* ===== CLOSING ===== */
+  .closing {
+    background: linear-gradient(160deg, #503529, #C4788A);
+    color: white;
+    padding: 4rem 2rem;
+    text-align: center;
+  }
+  .closing h2 {
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 2rem;
+    font-weight: 800;
+    margin-bottom: 1rem;
+  }
+  .closing p {
+    max-width: 600px;
+    margin: 0 auto 1.5rem;
+    font-family: 'DM Sans', sans-serif;
+    opacity: 0.9;
+    line-height: 1.7;
+    font-size: 0.95rem;
+  }
+  .closing .founder-quote {
+    font-style: italic;
+    opacity: 0.85;
+    font-family: 'Playfair Display', Georgia, serif;
+    font-size: 1.05rem;
+  }
+
+  /* ===== FOOTER ===== */
+  footer {
+    font-family: 'DM Sans', sans-serif;
+    text-align: center;
+    padding: 2rem;
+    color: var(--gray-light);
+    font-size: 0.78rem;
+    border-top: 1px solid var(--gray-200);
+    line-height: 1.6;
+  }
+
+  /* ===== MOBILE ===== */
+  @media (max-width: 600px) {
+    .cover { padding: 3rem 1.25rem; min-height: 320px; }
+    .cover h1 { font-size: 2.2rem; }
+    .cover h1 strong { font-size: 2rem; }
+    .cover .cover-sub { font-size: 0.9rem; }
+    .about-section { padding: 2rem 1.25rem; }
+    .about-section p.lead { font-size: 1.05rem; }
+    .about-section p { font-size: 0.95rem; }
+    .portrait { padding: 2rem 1.25rem; }
+    .portrait-name { font-size: 1.2rem; }
+    .portrait-descriptor { font-size: 0.78rem; }
+    .portrait-avatar { width: 60px; height: 60px; font-size: 1.2rem; }
+    .portrait p { font-size: 0.95rem; }
+    blockquote.voice p { font-size: 0.95rem; }
+    .thematic { padding: 2rem 1.25rem; }
+    .closing { padding: 3rem 1.25rem; }
+    .closing h2 { font-size: 1.6rem; }
+  }
+
+  /* ===== PRINT ===== */
+  @media print {
+    body { background: white; }
+    .progress-bar { display: none; }
+    .back-to-top { display: none; }
+    .reveal, .reveal-left, .reveal-scale, .reveal-unfurl {
+      opacity: 1 !important;
+      transform: none !important;
+    }
+    blockquote.voice { border-left-width: 5px !important; }
+    .cover { min-height: auto; page-break-inside: avoid; }
+    .portrait { page-break-inside: avoid; break-inside: avoid; }
+  }
+
+  /* ---- Password gate ---- */
+  body.gated #site-content{display:none}
+  #gate{
+    position:fixed;inset:0;z-index:9999;
+    background:var(--cream);
+    display:flex;align-items:center;justify-content:center;
+    padding:24px;
+  }
+  body:not(.gated) #gate{display:none}
+  .gate-card{
+    background:#fff;border:1px solid var(--gray-200);border-radius:20px;
+    box-shadow:0 10px 28px rgba(122,56,85,0.14);
+    padding:40px 36px;max-width:360px;width:100%;text-align:center;
+  }
+  .gate-card h1{font-family:'Playfair Display',Georgia,serif;font-size:1.3rem;margin-bottom:8px;color:var(--charcoal)}
+  .gate-card p{font-family:'DM Sans',sans-serif;font-size:0.85rem;color:var(--warm-gray);margin-bottom:22px}
+  .gate-card input{
+    width:100%;padding:11px 14px;border:1px solid var(--gray-200);border-radius:10px;
+    font-family:'DM Sans',sans-serif;font-size:0.95rem;text-align:center;letter-spacing:2px;
+    margin-bottom:14px;color:var(--charcoal);
+  }
+  .gate-card input:focus{outline:none;border-color:var(--rose)}
+  .gate-card button{
+    width:100%;padding:11px 14px;border:none;border-radius:10px;
+    background:var(--rose-dark);color:#fff;font-family:'DM Sans',sans-serif;font-weight:600;font-size:0.9rem;
+    cursor:pointer;transition:background 0.15s;
+  }
+  .gate-card button:hover{background:var(--rose-deep)}
+  .gate-error{
+    font-family:'DM Sans',sans-serif;font-size:0.78rem;color:var(--rose-deep);
+    margin-top:12px;min-height:1em;
+  }
+</style>
+</head>
+<body class="gated">
+<div id="gate">
+  <div class="gate-card">
+    <h1>Her Story, Her Journey</h1>
+    <p>This voice booklet is shared privately. Enter the password to continue.</p>
+    <form id="gate-form" autocomplete="off">
+      <input type="password" id="gate-input" placeholder="Password" autofocus>
+      <button type="submit">Enter</button>
+      <div class="gate-error" id="gate-error"></div>
+    </form>
+  </div>
+</div>
+<div id="site-content">
+
+
+<!-- READING PROGRESS BAR -->
+<div class="progress-bar" aria-hidden="true">
+  <div class="progress-bar-inner" id="progressBar"></div>
+</div>
+
+<!-- BACK TO TOP -->
+<button class="back-to-top" id="backToTop" aria-label="Back to top">&#8593;</button>
+
+<!-- ==================== COVER ==================== -->
+<div class="cover">
+  <div class="cover-sup">#SheDIDIT - Participant Voice Booklet - 2026</div>
+  <h1>Her Story,<strong>Her Journey</strong></h1>
+  <div class="cover-line"></div>
+  <div class="cover-sub">Voices from #SheFUND - portraits of migrant women entrepreneurs navigating the Belgian entrepreneurial ecosystem.</div>
+</div>
+
+<!-- ==================== ABOUT ==================== -->
+<div class="about-section reveal">
+  <p class="lead">These are not stories about funding outcomes. They are about what happens when a woman is taken seriously as an entrepreneur - sometimes, as several of these women describe, for the first time.</p>
+  <p>This booklet draws on qualitative interviews conducted between February and June 2026 for the #SheFUND impact study, with funded entrepreneurs, non-funded applicants and coaching participants, programme staff and coaches, and a financial partner. Participants came to Belgium from all over the world and are now active in diverse business sectors, ranging from food, fashion, and craftsmanship to well-being and AI consulting.</p>
+  <p>Some were funded. Some were not. Several engaged with coaching only, without applying for the loan. All carry something forward.</p>
+</div>
+
+<!-- ==================== PART ONE: FUNDED ==================== -->
+<div class="section-divider reveal-unfurl">
+  <h2>Part One</h2>
+  <p>Funded Entrepreneurs</p>
+</div>
+
+<!-- PORTRAIT: BABY PRODUCT INNOVATOR -->
+<div class="portrait portrait-card reveal">
+  <div class="portrait-header">
+    <div class="portrait-avatar funded">F</div>
+    <div class="portrait-meta">
+      <div class="portrait-badge badge-f">Funded - 2025 Winner</div>
+      <div class="portrait-name">Baby product innovator</div>
+      <div class="portrait-descriptor">Czech Republic - Baby and parenting product innovation - approx. 10 years in Belgium - pre-launch at time of interview</div>
+    </div>
+  </div>
+
+  <h3>Her Path to Entrepreneurship</h3>
+  <p>A lawyer by training, she worked in Prague, then Zagreb, then moved to Brussels. When she became a mother, something came into focus: the product range available to parents was genuinely inadequate, and she knew - concretely - how it could work better. She spent five years building the business while raising children largely alone. Her sentence about networks repeats like a signature: <em>"As a lawyer, as an expat here in Brussels, I didn't have any network. I was at home with kids, so I really have zero network."</em></p>
+
+  <h3>The #SheFUND Experience</h3>
+  <p>She found #SheDIDIT herself - not the other way around. She was matched with a mentor and invited, as a replacement speaker, to pitch at a #SheFUND event. That event was the pivot.</p>
+  <blockquote class="voice teal reveal-quote">
+    <p>"Before then I was pitching mostly to male audiences and I just did not relate so well. At this event, the vibe was amazing. The audience was wonderful."</p>
+  </blockquote>
+  <blockquote class="voice teal reveal-quote">
+    <p>"I was really amazed how pitching to women and an entrepreneurial-focused audience - how different it is - and how well it really clicked with me."</p>
+  </blockquote>
+  <p>She entered the 2025 competition and won. Her coaching hours were almost entirely focused on pitch architecture and unique selling proposition - a conscious choice, as her financial planning came from another accelerator. She stands by the trade-off.</p>
+
+  <h3>What Changed</h3>
+  <blockquote class="voice teal reveal-quote">
+    <p>"I have the money, and now I can work on the project."</p>
+  </blockquote>
+  <p>The winner credential functions as something she carries into the next room - not flaunted, but present and available. The crowdfunding launch is planned for November 2026. Production payments are secured. Her trajectory is the clearest forward-leaning one in the sample.</p>
+
+  <h3>What She Would Change</h3>
+  <p>Even as the 2025 winner, she raised a concern for the others who pitched alongside her:</p>
+  <blockquote class="voice reveal-quote">
+    <p>"I did not receive a systematic feedback about the pitch. Maybe it would be good to meet one more time, or to have a results session where we could hear that kind of feedback. They could learn. Or I could learn."</p>
+  </blockquote>
+  <p>Her advocacy for better feedback was spontaneous - offered as a gift to the programme, not prompted by any personal grievance. The pattern, appearing in both funded and non-funded accounts, is a structural signal.</p>
+</div>
+
+<!-- PORTRAIT: ARTISAN FOOD ENTREPRENEUR -->
+<div class="portrait portrait-card reveal">
+  <div class="portrait-header">
+    <div class="portrait-avatar funded">F</div>
+    <div class="portrait-meta">
+      <div class="portrait-badge badge-f">Funded - Edition 2024</div>
+      <div class="portrait-name">Artisan food entrepreneur</div>
+      <div class="portrait-descriptor">Eastern Europe - Artisan food and fermentation - approx. 10 years in Belgium - approx. 5 years in business</div>
+    </div>
+  </div>
+
+  <h3>Her Path to Entrepreneurship</h3>
+  <p>She grew up on a farm, trained through artistic school, worked in restaurant kitchens, and has now lived in Belgium for a decade. She is a chef by trade - though she rejects the word. Her business is built around fermentation, seasonal use of local farm produce, and a quiet, stubborn refusal of food waste. She has no family in Belgium. The informal network of women she has slowly built - other founders, other makers - has come to matter enormously.</p>
+  <p>She came to #SheDIDIT through an adjacent incubator that connected her with a coach with deep expertise in the food sector.</p>
+
+  <h3>The #SheFUND Experience</h3>
+  <blockquote class="voice green reveal-quote">
+    <p>"The template they send to fill in - it's very easy. You don't have to pull that information from thin air. My coach also helped me with the business plan. She was very helpful - because for people like me, that's black magic."</p>
+  </blockquote>
+  <p>The structured application template did something more than organise information - it gave shape to knowledge that had always been present but never structured. Financial planning, she says, had always been a fog for her. The coach and the template, together, made it navigable.</p>
+
+  <h3>What Changed</h3>
+  <p>The interest-free loan went into equipment: a vacuum machine, a labelling machine, ten thousand stickers, jars, a drying machine. Small investments that would otherwise have been made slowly against household cash-flow. The loan decoupled her business investment from her family budget - and that decoupling was named as the loan's real gift.</p>
+  <blockquote class="voice green reveal-quote">
+    <p>"I found it a really nice moment - just being able to say, okay, I can buy those stickers and not cry about it."</p>
+  </blockquote>
+  <blockquote class="voice green reveal-quote">
+    <p>"It's not a present, because you have to pay back. But it's a nice moment. You can order those things without sacrificing your own."</p>
+  </blockquote>
+  <blockquote class="voice green reveal-quote">
+    <p>"It brought me a lot of courage - when someone appreciates what you are doing."</p>
+  </blockquote>
+
+  <h3>What She Would Change</h3>
+  <p>Her warmth toward #SheDIDIT comes with a clear observation. The programme's centre of gravity is in one city; she lives elsewhere. Many events she would have wanted to attend, she simply could not. The evening event format and geographic concentration create a structural access gap that she names plainly - not as a personal grievance, but as a programme design observation.</p>
+
+  <h3>Looking Ahead</h3>
+  <p>She is expanding her atelier by forty-five square metres. She is booked through July. What she wants is not scale for its own sake. It is to sell something harder to name:</p>
+  <blockquote class="voice green reveal-quote">
+    <p>"Do I sell food, or do I sell the impact and the vision? That is a question. It's just difficult to answer. But that is my main goal - to sell the impact."</p>
+  </blockquote>
+</div>
+
+<!-- PORTRAIT: NUDE-TONE BEAUTY & LINGERIE ENTREPRENEUR -->
+<div class="portrait portrait-card reveal">
+  <div class="portrait-header">
+    <div class="portrait-avatar funded">F</div>
+    <div class="portrait-meta">
+      <div class="portrait-badge badge-f">Funded - #SheFUND Recipient</div>
+      <div class="portrait-name">Nude-tone beauty and fashion entrepreneur</div>
+      <div class="portrait-descriptor">Democratic Republic of Congo origin, raised in Belgium, now based in Spain - inclusive beauty and fashion e-commerce - law background</div>
+    </div>
+  </div>
+
+  <h3>Her Path to Entrepreneurship</h3>
+  <p>Her story moves between countries - Congo, Belgium and Spain, and back again - and mobility shaped what she built. Living in Brussels, she experienced its diversity as a genuine gift, but ran into a wall the moment she went looking for beauty and clothing products in her own skin tone. A lawyer by training, she describes the gap less as a business opportunity and more as an injustice to correct.</p>
+  <blockquote class="voice coral reveal-quote">
+    <p>"When it came to shopping and looking for products that represented me, that looked like me, there I saw that there was a lack of representation in a city that was so international, so diverse... It was kind of frustrating actually to look for specific products and not being able to find anything. I found a bit excluded. That's when I decided to start my own entrepreneurial journey and to create what I didn't find in the market."</p>
+  </blockquote>
+  <p>Her business reframes "nude" as a spectrum rather than a single, light shade - an online platform for underwear, tights, and makeup in nude tones for women with brown and black skin.</p>
+
+  <h3>The #SheFUND Experience</h3>
+  <p>She arrived at #SheDIDIT already intrigued by entrepreneurship but stalled - no starting point, and by her own account "a bit afraid." #SheDIDIT is where the vague ambition became a plan, and coaching came before the fund itself, once the financial obstacle became concrete.</p>
+  <blockquote class="voice coral reveal-quote">
+    <p>"It's really a nice community. They encourage you. They give you information. You are surrounded with people that are like-minded. They give you all the tools, connections."</p>
+  </blockquote>
+  <p>Like several others in this study, she names the financial-literacy training as the single most valuable part of the programme - not because the concepts were unfamiliar, but because implementation was:</p>
+  <blockquote class="voice coral reveal-quote">
+    <p>"I am more a law person, so I'm not good with numbers... I had an idea of what it was, but knowing what it is and to actually implement it in practice - these are two totally different things."</p>
+  </blockquote>
+
+  <h3>What Changed: The Pivot and the Loan</h3>
+  <p>Her original ambition was her own nude-tone lingerie line - but minimum-order costs made that impossible from day one. Rather than abandon the idea, she pivoted: she launched a platform reselling existing nude-tone brands first, using that phase to learn what price points and products her market actually wanted. The #SheFUND loan is what let her circle back to the original ambition.</p>
+  <blockquote class="voice coral reveal-quote">
+    <p>"It has allowed me first of all to acquire more products, because in the beginning I had only one product... to start already prototyping and designing with companies to create one product. I wouldn't have been possible for me to do that without funding."</p>
+  </blockquote>
+  <blockquote class="voice coral reveal-quote">
+    <p>"You get some quotas of minimum orders that you have to make, and you also have to create samples and you have to do testing... If you don't have the money, the fund, then it's not possible... you need to have that money upfront once you start the process so you can advance. So if you don't have that, then it stops there."</p>
+  </blockquote>
+  <p>She points to the loan's repayment structure - manageable monthly instalments rather than a lump sum - as what made the investment possible at all: <em>"It's easier for me to pay back that amount monthly and being able to develop my product than not having, for example, already ten or twenty thousand euros that you have to give upfront yourself."</em></p>
+
+  <h3>What Changed: Confidence and Validation</h3>
+  <blockquote class="voice coral reveal-quote">
+    <p>"It gave me more self-esteem, and also it was very nice for me to have someone else validate that the product that I was developing was needed - that it's actually a problem that needs a solution... it means that I am on a good path."</p>
+  </blockquote>
+  <p>Winning wasn't only about the money. Being backed by a jury that read her figures and her story and said yes functioned as external proof that her instinct about the market gap was correct.</p>
+
+  <h3>What She Would Change</h3>
+  <p>Her one concrete recommendation - one she has already raised directly with the #SheDIDIT team - is procedural transparency about money: applicants should be told upfront, clearly, that administration fees are deducted from the loan before disbursement.</p>
+  <blockquote class="voice reveal-quote">
+    <p>"If you have your business plan and you think, okay, I need five thousand, you have to think that you're only going to receive four thousand five hundred... For people who are starting, that five hundred euros can make the difference for them getting the logo, or one prototype. It's really important to know the net amount that you're going to receive."</p>
+  </blockquote>
+
+  <h3>Looking Ahead</h3>
+  <p>Her plans are on pause for now - a recent move and a health issue slowed her down - but not abandoned. She remains in touch with #SheDIDIT beyond the funding itself, attending workshops and drawing on the community for practical help, including a fellow participant who designed her logo. Her ambition remains large: to become <em>"the go-to platform of Europe"</em> for everything nude-related - shoes, dancewear, makeup - not only lingerie.</p>
+</div>
+
+<!-- ==================== PART TWO: NON-FUNDED ==================== -->
+<div class="section-divider reveal-unfurl">
+  <h2>Part Two</h2>
+  <p>Non-Funded and Coaching Participants</p>
+</div>
+
+<!-- PORTRAIT: ARTISAN JEWELLERY DESIGNER -->
+<div class="portrait portrait-card reveal">
+  <div class="portrait-header">
+    <div class="portrait-avatar nonfunded">N</div>
+    <div class="portrait-meta">
+      <div class="portrait-badge badge-nf">Non-Funded - Edition 2025</div>
+      <div class="portrait-name">Artisan jewellery designer</div>
+      <div class="portrait-descriptor">West Africa - Artisan jewellery and ethical collaboration - approx. 4 years in Belgium - part-time business alongside full-time employment</div>
+    </div>
+  </div>
+
+  <h3>Her Path to Entrepreneurship</h3>
+  <p>She founded her jewellery brand in 2021. From the start, it has been about collaboration - working with artisans including a maker in Mali, under terms she considers equitable. She still holds a full-time job and is pursuing a master's in commercial science. She found #SheDIDIT through her own research, attended events, and eventually sold her work through the concept store. Before applying, she was already part of the ecosystem.</p>
+
+  <h3>The #SheFUND Experience</h3>
+  <p>The application was her first formal pitch. The coaching she valued genuinely. She names her coach as someone who helped her stand up and present the business - for the first time - to people outside her own world.</p>
+  <blockquote class="voice reveal-quote">
+    <p>"To prepare the pitch, we received a few documents - and it was the first time for me to pitch, to present my business to external people. My coach was very helpful. She told me what could be improved, and what was good already, which I really appreciate."</p>
+  </blockquote>
+
+  <h3>The Decision - and a Procedural Observation</h3>
+  <p>She was not selected. What followed, she describes carefully - not as a wound, but as something she wants on record. She had prepared against the evaluation form she had been given. When feedback came, it did not match the form.</p>
+  <blockquote class="voice reveal-quote">
+    <p>"I prepared my pitch according to the evaluation - how it was going to be assessed. But then the assessment went outside of the assessment form. I found the feedback quite light, and not objective."</p>
+  </blockquote>
+  <p>She does not catastrophise. Her concern is procedural, and it is offered as a gift to the programme: this is what could be better. The expected jury was not the jury she faced; some members announced in advance were absent, others arrived unannounced.</p>
+
+  <h3>What She Carries Forward</h3>
+  <blockquote class="voice reveal-quote">
+    <p>"A no doesn't mean that it's not good. It just means that maybe this is not the right place for you. So I went to other environments. It really motivated me to go bigger, to not stay in small-minded places."</p>
+  </blockquote>
+  <p>She continues to value what #SheDIDIT does well - the networking events, the concept store, her coach. Her trajectory is outward: she is looking beyond women-of-colour-specific spaces for the funding environment that will fit her next step.</p>
+</div>
+
+<!-- PORTRAIT: AI ENTREPRENEUR -->
+<div class="portrait portrait-card reveal">
+  <div class="portrait-header">
+    <div class="portrait-avatar coaching">C</div>
+    <div class="portrait-meta">
+      <div class="portrait-badge badge-c">Coaching Only - 2023</div>
+      <div class="portrait-name">AI entrepreneur</div>
+      <div class="portrait-descriptor">Equatorial Guinea - AI and conversational technology - Brussels - high-growth startup</div>
+    </div>
+  </div>
+
+  <h3>Her Path to Entrepreneurship</h3>
+  <p>She studied statistics before moving to Brussels as a data scientist and AI engineer. She managed an eco-tech accessories brand for seven years, then pivoted to AI. She reached out to #SheDIDIT seeking a support network in Brussels. Her coaching period was short - about one month - and she valued it primarily for psychological support during a difficult transitional phase, not technical business planning.</p>
+
+  <h3>Coaching as a Bridge</h3>
+  <p>She did not apply for the loan. She was sceptical about whether a EUR 10,000 loan would be meaningful for her type of high-growth startup. What the coaching gave her was something more immediate: a sense of being seen and held during uncertainty.</p>
+  <blockquote class="voice primary reveal-quote">
+    <p>"What I appreciated the most was the mental support, the psychological support. I was kind of lost. Just having a coach that could listen to me and reassure me - that's what I appreciated the most."</p>
+  </blockquote>
+
+  <h3>The Aspiration Gap</h3>
+  <blockquote class="voice primary reveal-quote">
+    <p>"The impression that I had was that most of the networking tends to bring together everyone who is struggling - a group of people navigating hardship. I went out looking for inspiration. I wanted to be in contact with people making it."</p>
+  </blockquote>
+  <p>Her observation is offered with care, not hostility. She values the safe space #SheDIDIT creates. But she argues that minority entrepreneurs - particularly those with high-growth ambitions - need to see role models making bold moves, not only others navigating survival. This is an aspirational community design challenge, not only a support challenge.</p>
+  <blockquote class="voice primary reveal-quote">
+    <p>"I had to get out of all the networks and organisations that were available at the time and find something else."</p>
+  </blockquote>
+
+  <h3>Looking Ahead</h3>
+  <p>She founded a human-centric conversational AI startup now operating with a team of six to seven. Since her coaching period, her revenue has multiplied by twenty. She is currently raising EUR 5 million. Her trajectory is one of the most striking in the study: the programme played a bridging role, not a transformative one, in a journey already powerful in its own right. The coaching-only pathway matters - and some of the programme's most significant outcomes are not in the loan portfolio.</p>
+</div>
+
+<!-- PORTRAIT: ACUPUNCTURE PRACTITIONER -->
+<div class="portrait portrait-card reveal">
+  <div class="portrait-header">
+    <div class="portrait-avatar new">C</div>
+    <div class="portrait-meta">
+      <div class="portrait-badge badge-new">Coaching Participant</div>
+      <div class="portrait-name">Acupuncture practitioner</div>
+      <div class="portrait-descriptor">Portugal - Acupuncture and integrative wellness - Brussels - burnout recovery and post-career pivot</div>
+    </div>
+  </div>
+
+  <h3>Her Path to Entrepreneurship</h3>
+  <p>She spent years working as a nurse in a hospital system before the work took its toll. She experienced burnout - a slow-building, then sudden exhaustion - and found herself rethinking not just the job but the entire framework of how care was delivered. She trained as an acupuncture practitioner and established a practice in Brussels focused on integrative wellness and preventive health.</p>
+  <p>She came to #SheDIDIT not through an entrepreneurial ecosystem event but through a public employment service - a government-sponsored pathway. This route places her in a distinct subset of participants: women who found #SheDIDIT through institutional referral, often while navigating a significant professional or personal transition.</p>
+
+  <h3>The #SheFUND Experience</h3>
+  <p>Coaching was the centre of gravity. For her, the challenge was not developing a new business idea but maintaining the discipline and structure to execute one that already existed clearly in her mind. Her coach worked with her on consistency - the connective tissue between vision and practice that is easy to lose when managing recovery alongside business-building.</p>
+  <blockquote class="voice amber reveal-quote">
+    <p>"I have really struggled to be consistent, so it's really helped me to keep focus on my goal."</p>
+  </blockquote>
+
+  <h3>The Accountability Structure</h3>
+  <p>What the coaching gave her was not new knowledge - it was a scheduled witness. Having a committed external relationship created the accountability structure that translated planning into action. The coach did not tell her what to do. She already knew. The coach made it harder to defer.</p>
+  <p>This dimension of the coaching relationship - the progress audit function - is particularly meaningful in cases where participants have strong clarity of vision but variable execution capacity, often because they are managing significant personal transitions alongside their entrepreneurial work.</p>
+
+  <h3>Looking Ahead</h3>
+  <p>Her practice is built and operational. The government pathway that brought her to #SheDIDIT is a channel the programme has not yet fully mapped or leveraged. For women arriving through public employment services at moments of professional inflection, #SheDIDIT offers something distinctive: a framework that treats the entrepreneurial transition as legitimate, viable, and worthy of structured support.</p>
+</div>
+
+<!-- PORTRAIT: L&D CONSULTANT -->
+<div class="portrait portrait-card reveal">
+  <div class="portrait-header">
+    <div class="portrait-avatar new">N</div>
+    <div class="portrait-meta">
+      <div class="portrait-badge badge-new">New Interview - 2026</div>
+      <div class="portrait-name">Learning and Development consultant</div>
+      <div class="portrait-descriptor">Ukraine (war-displaced) - Learning and Development consultancy - 4 years in Belgium - launched 2026</div>
+    </div>
+  </div>
+
+  <h3>Her Path to Entrepreneurship</h3>
+  <p>She has over twelve years of experience in Learning and Development and previously held management roles in international business schools. She arrived in Belgium four years ago, displaced by the war in Ukraine. Her credentials - professional history, reputation, network - did not travel with her. Rebuilding became, in her words, rebuilding herself from scratch. She was searching for rooms: spaces where she could trust the people, the structure, and the intent.</p>
+  <blockquote class="voice amber reveal-quote">
+    <p>"I was rebuilding myself from scratch. Professionally, personally. All I was searching for was the right people. People I could trust. #SheDIDIT was foundational to my business."</p>
+  </blockquote>
+
+  <h3>The #SheFUND Experience</h3>
+  <p>She discovered #SheDIDIT at a banking event and chose the founder as her coach specifically because she felt she could trust her expertise. The coaching programme's financial and business plan templates were, she says, fundamental to her foundation. She also supplemented coaching with external programmes and mentorship - an accumulative, proactive approach to building the support architecture that displacement had stripped away.</p>
+
+  <h3>The Programme Ceiling</h3>
+  <p>As a highly experienced professional, she found the standard curriculum occasionally misaligned with the complexity of her B2B consultancy. There were moments when the programme was structured for earlier-stage founders than she was - a tension she navigated with grace, but named clearly.</p>
+  <blockquote class="voice amber reveal-quote">
+    <p>"Perhaps my project at this stage is a little too broad to fit into five sessions."</p>
+  </blockquote>
+
+  <h3>Looking Ahead</h3>
+  <p>She officially launched her consultancy in 2026 and is now a banking client herself. She is self-funding her current growth phase and not seeking external investment. Her journey illustrates the programme's capacity to serve post-crisis reconstruction as much as business startup - a dimension not yet foregrounded in the official programme narrative. For women with high prior experience navigating severe displacement, #SheDIDIT offers not just a business programme but a relational and institutional anchor.</p>
+</div>
+
+<!-- PORTRAIT: COMMUNICATIONS CONSULTANT -->
+<div class="portrait portrait-card reveal">
+  <div class="portrait-header">
+    <div class="portrait-avatar coaching">C</div>
+    <div class="portrait-meta">
+      <div class="portrait-badge badge-c">Coaching Only - 2023</div>
+      <div class="portrait-name">Communications consultant</div>
+      <div class="portrait-descriptor">Croatia - EU communications and training freelancer - approx. 8 years in Belgium - approx. 5 years in business</div>
+    </div>
+  </div>
+
+  <h3>Her Path to Entrepreneurship</h3>
+  <p>A Croatian communications specialist who has lived in Belgium for eight years. She holds a master's in communication for international relations and has freelanced for about five years. She came to #SheDIDIT not through a funding competition but through a referral chain that began with a dinner. She was trying to describe her work concerns to friends with salaried jobs, and she realised mid-sentence that they could not follow her.</p>
+  <blockquote class="voice blue reveal-quote">
+    <p>"My friend told me: I have no idea what you're talking about. I go home, and the salary comes - I don't know what you're talking about."</p>
+  </blockquote>
+
+  <h3>The #SheFUND Experience</h3>
+  <p>She never applied for the loan. She is classified as coaching-only - a different trajectory, and analytically important. Her one-to-one sessions with her coach were the most significant entrepreneurial support she has ever received.</p>
+  <blockquote class="voice blue reveal-quote">
+    <p>"It was the first time I had ever done proper budgeting - even after two years in business."</p>
+  </blockquote>
+  <p>Coaching was not only a skills programme - it was a gentle accountability structure. The progress audit quality of her sessions was something she specifically named:</p>
+  <blockquote class="voice blue reveal-quote">
+    <p>"The coach would say: you haven't booked any clients this month - what happened? Gently."</p>
+  </blockquote>
+
+  <h3>The Seed</h3>
+  <p>When asked what changed most radically, she answers with one word repeated: "Psychological. Psychological part." Her coach identified a capacity she had not seen in herself - to train, to teach, to deliver workshops - and gave her permission to claim it.</p>
+  <blockquote class="voice blue reveal-quote">
+    <p>"She picked up on nuances. She was the one who gave me this courage, to say: you should be doing more training, you are good at this. I said, but I'm not a trainer, not a certified coach. And she said: you don't need to be. This is how you start. So that seed was definitely planted there."</p>
+  </blockquote>
+
+  <h3>What She Carries Forward</h3>
+  <blockquote class="voice blue reveal-quote">
+    <p>"I started this so I could have more time for me, and for things that matter to me - and somehow I end up working all the time. Sometimes I forget to ask myself: what do I want from this?"</p>
+  </blockquote>
+  <p>Two years on, the seed has not fully grown - she is still rebalancing toward a training-and-comms mix - but it is alive. Another outcome: a peer relationship with a fellow coaching alumna who became her client. Her story is a reminder that the #SheFUND decision is not the only place where this programme leaves a mark. There was no pitch, no jury, no envelope to open. There was a coach who saw a capability before she did, and named it.</p>
+</div>
+
+<!-- PORTRAIT: ADMINISTRATIVE CONSULTANT -->
+<div class="portrait portrait-card reveal">
+  <div class="portrait-header">
+    <div class="portrait-avatar new">C</div>
+    <div class="portrait-meta">
+      <div class="portrait-badge badge-new">Coaching Participant</div>
+      <div class="portrait-name">Administrative consultant</div>
+      <div class="portrait-descriptor">Turkey/Belgium - Administrative and regulatory consulting - single parent - launched August 2025</div>
+    </div>
+  </div>
+
+  <h3>Her Path to Entrepreneurship</h3>
+  <p>A single mother of three, working part-time for a government body while building an administrative and regulatory consulting practice on the side. Her business, launched in August 2025, draws on years of administrative expertise - translating complex regulatory and documentation processes into accessible support for clients who find institutions hard to navigate.</p>
+  <p>For her, the launch of the business was not a leap into the unknown but a deliberate, paced decision. What she needed was not validation of the idea - she had clarity on that - but the structural tools and external accountability to move from intention to action.</p>
+
+  <h3>The #SheFUND Experience</h3>
+  <p>Her coach provided what she describes as an end-to-end architecture of the business: strategic framing at the level of positioning and vision, and tactical execution at the level of brochures, pricing, and client communication.</p>
+  <blockquote class="voice amber reveal-quote">
+    <p>"She literally helped me through the macro level and the micro level - how I could see myself from a helicopter view and how this translated into my brochure, my services, how to name them, my prices. So it was exactly what I needed."</p>
+  </blockquote>
+  <blockquote class="voice amber reveal-quote">
+    <p>"I knew that I had the capacity, I had the knowledge - I just needed this bridge, and that was what my business coach gave to me."</p>
+  </blockquote>
+
+  <h3>What Changed</h3>
+  <p>What #SheDIDIT gave her was not primarily new knowledge. It was the translation of knowledge already held into a usable, executable form - the bridge function. The results were immediate and tangible:</p>
+  <blockquote class="voice amber reveal-quote">
+    <p>"I'm actually executing what my business coach told me, and it works - I'm earning money from that."</p>
+  </blockquote>
+
+  <h3>The Community Dimension</h3>
+  <blockquote class="voice amber reveal-quote">
+    <p>"I will actually never leave #SheDIDIT. They always give what a woman needs."</p>
+  </blockquote>
+  <p>For her, #SheDIDIT is not a programme she completed and left. It is a community she joined and intends to remain part of. Her description of what #SheDIDIT provides gestures toward something that exceeds the formal programme offering: a space structured around the specific challenges of being a woman building something, in a context that often does not make that easy.</p>
+</div>
+
+<!-- PORTRAIT: LEATHER HERITAGE DESIGNER -->
+<div class="portrait portrait-card reveal">
+  <div class="portrait-header">
+    <div class="portrait-avatar new">N</div>
+    <div class="portrait-meta">
+      <div class="portrait-badge badge-nf">Non-Funded</div>
+      <div class="portrait-name">Leather designer</div>
+      <div class="portrait-descriptor">Turkey - Leather heritage brand - 12 years in Belgium - Antwerp fashion district</div>
+    </div>
+  </div>
+
+  <h3>Her Path to Entrepreneurship</h3>
+  <p>She has lived in Belgium for twelve years, building a corporate career in sales and programme management. During COVID, a management crisis pushed her to the edge of the corporate world - and a chance moment of clarity brought her back to her roots. The moment is vivid and specific:</p>
+  <blockquote class="voice amber reveal-quote">
+    <p>"One day my leather jacket was on the chair - I smelled the leather - and I noticed that my nervous system was getting calmer. That night I decided to do something with our leather heritage."</p>
+  </blockquote>
+  <p>Her brand is named after her grandparents and rooted in her father's forty years of leather craftsmanship. The business carries her history - it is not a market opportunity she identified, but an inheritance she chose to honour.</p>
+
+  <h3>The #SheFUND Experience</h3>
+  <p>She joined the coaching programme for four months and applied for the fund. The community was significant - the feeling of not being alone mattered. She did not prepare the financial section of her pitch adequately; she was working alone, under time pressure, and the numbers were incomplete. She was not selected.</p>
+
+  <h3>Persistence Through Rejection</h3>
+  <blockquote class="voice amber reveal-quote">
+    <p>"Winning is a little bit a perceptual thing. At the end, we always win because we always learn."</p>
+  </blockquote>
+  <p>She was subsequently declined by a bank and by a government funding programme. Each rejection became part of the learning curve. She is still standing.</p>
+
+  <h3>Looking Ahead</h3>
+  <p>The brand registered officially in December 2024. She has transitioned from pop-up to a permanent shop in the Antwerp fashion district. She is now focused on raising online visibility and expanding into B2B sales. Her business is, in a literal sense, a piece of her family alive in a new country.</p>
+</div>
+
+<!-- ==================== PART THREE: PROGRAMME STAFF ==================== -->
+<div class="section-divider reveal-unfurl">
+  <h2>Part Three</h2>
+  <p>From Inside the Programme</p>
+</div>
+
+<!-- PORTRAIT: BUSINESS COACH -->
+<div class="portrait portrait-card reveal">
+  <div class="portrait-header">
+    <div class="portrait-avatar stakeholder">S</div>
+    <div class="portrait-meta">
+      <div class="portrait-badge badge-s">Coach</div>
+      <div class="portrait-name">Business coach, food and hospitality sector</div>
+      <div class="portrait-descriptor">Chile - Business coach - She Means Business programme</div>
+    </div>
+  </div>
+
+  <h3>The Coaching Philosophy</h3>
+  <p>She brings sector-specific expertise in food and hospitality alongside a coaching orientation that places psychological and relational work at the centre of what she does. She describes her role not as a technical instructor but as a skilled observer of where a participant is stuck - and an enabler of the internal shift that allows movement.</p>
+  <blockquote class="voice primary reveal-quote">
+    <p>"Making a financial plan, you can learn that from tutorials. The most valuable thing is identifying when someone is struggling with self-confidence and helping them make the mental click."</p>
+  </blockquote>
+
+  <h3>What She Sees</h3>
+  <p>From her position as a coach working with multiple participants across cohorts, she offers a structural observation that individual participant accounts cannot: the pattern. The technical skills participants gain are real and lasting. But the capability that makes the difference - the ability to continue, to decide, to act when uncertain - is built through relationship and recognition, not content delivery.</p>
+  <blockquote class="voice primary reveal-quote">
+    <p>"That feeling of not being alone at the top. It was very nice to have that help."</p>
+  </blockquote>
+</div>
+
+<!-- PORTRAIT: PROGRAMME LEAD -->
+<div class="portrait portrait-card reveal">
+  <div class="portrait-header">
+    <div class="portrait-avatar stakeholder">S</div>
+    <div class="portrait-meta">
+      <div class="portrait-badge badge-s">Staff - Programme Operations</div>
+      <div class="portrait-name">Programme operations lead</div>
+      <div class="portrait-descriptor">Belgium - Coaching and programme lead - both cohorts 2024 and 2025</div>
+    </div>
+  </div>
+
+  <h3>The Coaching Architecture</h3>
+  <p>She led the coaching team and the programme through both cohorts. Coaches are matched on two dimensions: sector expertise and language. The programme runs on two tracks - free coaching with a waiting list and premium coaching with immediate access. The bifurcation is a structural tension the programme is itself aware of.</p>
+
+  <h3>Why the Selection Changed</h3>
+  <blockquote class="voice reveal-quote">
+    <p>"At the end of the day there were too many rounds. For what it is, it took a bit too long. Because making someone jump through hoops for money that's not free - it's a loan, it's not a grant."</p>
+  </blockquote>
+  <p>The 2025 change making coaching completion mandatory before application came from a single non-repayment incident involving an applicant outside the coaching pipeline. Coaching creates a sense of responsibility and improves communication - making it a prerequisite addressed both a quality control and a relationship management goal.</p>
+
+  <h3>A Latent Credential</h3>
+  <p>One finding from this interview is absent from every participant account in this booklet: the coaching programme is formally recognised by the Flemish government. Completing it can function as a credential with institutions such as the unemployment office. None of the participants interviewed appear to have used this. A recommendation writes itself: this needs to be communicated intentionally, at the start of the programme, not discovered by accident.</p>
+</div>
+
+<!-- PORTRAIT: FINANCIAL PARTNER -->
+<div class="portrait portrait-card reveal">
+  <div class="portrait-header">
+    <div class="portrait-avatar stakeholder">P</div>
+    <div class="portrait-meta">
+      <div class="portrait-badge badge-s">Financial Partner</div>
+      <div class="portrait-name">MicroStart partnership representative</div>
+      <div class="portrait-descriptor">MicroStart - Partnership Manager - approx. 3-4 years in role</div>
+    </div>
+  </div>
+
+  <h3>The Loan</h3>
+  <p>MicroStart is the Belgian microfinance institution that operationalises the #SheFUND loan. The division of labour is clean: #SheDIDIT selects candidates and accompanies them through coaching; MicroStart conducts due diligence, disburses the loan, and manages repayment. The financial partner is present at the pitch to offer feedback but has no vote in the selection decision.</p>
+  <blockquote class="voice primary reveal-quote">
+    <p>"It's 100% interest-free, which doesn't happen very often. There is also no guarantee needed. So it's based on trust - and they are backed by two organisations, #SheDIDIT and us."</p>
+  </blockquote>
+
+  <h3>Why Some Files Are Not Approved</h3>
+  <p>Refusal is not about project ambition or social impact. It is about repayment capacity and the existence of a contingency plan. The margins need room. A key question in the assessment: if the project does not start, or starts but does not continue - does the applicant have an alternative? The personal commitment and investment of time must also be credible; a business plan alone does not suffice.</p>
+  <blockquote class="voice primary reveal-quote">
+    <p>"When people give you money, it's not really only about the money - it's more about trust, confidence."</p>
+  </blockquote>
+
+  <h3>How can the Loan Impact be Better Measured?</h3>
+  <p>MicroStart tracks repayment, not business evolution. Revenue growth, employment creation, and market expansion are not systematically monitored. For the cost-benefit dimension of this research, that is a material finding: the social return calculation will have to be built from direct participant reporting, not administrative data. A shared reporting framework would unlock a much richer longitudinal picture of the programme's economic and social impact.</p>
+</div>
+
+<!-- ==================== CLOSING ==================== -->
+<div class="closing reveal-scale">
+  <h2>Every Story Matters</h2>
+  <p>These voices represent a carefully selected set of experiences, chosen not to capture averages, but to illuminate the breadth of what #SheDIDIT and #SheFUND make possible.</p>
+  <p>Their stories do not converge into one single finding. For some women, transformation began with a practical exercise. For others, it began with a single word planted by a coach at the right moment. One participant won funding and is preparing to launch. Another did not win, but is now earning income from what her coach taught her. Another had to pivot away from her original idea to remain financially afloat, only to use her loan later to return to that idea and pursue it again.</p>
+  <p>What they share is that the process took them seriously.</p>
+  <p class="founder-quote">"The potential is there within you, and it is our role to unlock it." - #SheDIDIT Founder</p>
+</div>
+
+<footer>
+  Her Story, Her Journey - #SheFUND Participant Voice Booklet<br>
+  Researcher: Alessandra Cavallo - University of Bologna - #SheDIDIT - Supported by European Microfinance Network (EMN) Maria Nowak Fellowship
+</footer>
+
+<script>
+  // ===== SCROLL REVEAL SYSTEM =====
+  const revealObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        revealObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.15, rootMargin: '0px 0px -40px 0px' });
+
+  document.querySelectorAll('.reveal, .reveal-left, .reveal-scale, .reveal-unfurl').forEach(el => {
+    revealObserver.observe(el);
+  });
+
+  // ===== QUOTE BORDER DRAW =====
+  const quoteObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible-quote');
+        quoteObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.3 });
+
+  document.querySelectorAll('blockquote.voice').forEach(el => {
+    quoteObserver.observe(el);
+  });
+
+  // ===== READING PROGRESS BAR =====
+  const progressBar = document.getElementById('progressBar');
+  let ticking = false;
+
+  function updateProgress() {
+    const scrollTop = window.scrollY;
+    const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+    const progress = docHeight > 0 ? scrollTop / docHeight : 0;
+    progressBar.style.transform = `scaleX(${progress})`;
+    ticking = false;
+  }
+
+  window.addEventListener('scroll', () => {
+    if (!ticking) {
+      requestAnimationFrame(updateProgress);
+      ticking = true;
+    }
+  }, { passive: true });
+
+  // ===== BACK TO TOP =====
+  const backToTop = document.getElementById('backToTop');
+
+  window.addEventListener('scroll', () => {
+    if (window.scrollY > 500) {
+      backToTop.classList.add('show');
+    } else {
+      backToTop.classList.remove('show');
+    }
+  }, { passive: true });
+
+  backToTop.addEventListener('click', () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  });
+</script>
+
+</div>
+<script>
+(function(){
+  var HASH = '777abbc10ddf9551bf53465886aa3735ae687df3c3bacf08fa300736422cc21b';
+  var KEY = 'sf_dashboard_unlocked';
+
+  function sha256Hex(text){
+    var data = new TextEncoder().encode(text);
+    return crypto.subtle.digest('SHA-256', data).then(function(buf){
+      return Array.from(new Uint8Array(buf)).map(function(b){ return b.toString(16).padStart(2,'0'); }).join('');
+    });
+  }
+
+  function unlock(){
+    document.body.classList.remove('gated');
+  }
+
+  if (localStorage.getItem(KEY) === HASH) {
+    unlock();
+  }
+
+  var form = document.getElementById('gate-form');
+  var input = document.getElementById('gate-input');
+  var error = document.getElementById('gate-error');
+
+  form.addEventListener('submit', function(e){
+    e.preventDefault();
+    sha256Hex(input.value).then(function(hex){
+      if (hex === HASH) {
+        localStorage.setItem(KEY, HASH);
+        error.textContent = '';
+        unlock();
+      } else {
+        error.textContent = 'Incorrect password.';
+        input.value = '';
+        input.focus();
+      }
+    });
+  });
+})();
+</script>
+</body>
+</html>
