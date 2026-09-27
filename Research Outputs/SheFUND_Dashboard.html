@@ -327,18 +327,7 @@ body[data-view="nonfunded"] [data-tag="funded"]{opacity:0.4}
 }
 </style>
 </head>
-<body data-view="all" class="gated">
-<div id="gate">
-  <div class="gate-card">
-    <h1>#SheFUND Impact Dashboard</h1>
-    <p>This report is shared privately. Enter the password to continue.</p>
-    <form id="gate-form" autocomplete="off">
-      <input type="password" id="gate-input" placeholder="Password" autofocus>
-      <button type="submit">Enter</button>
-      <div class="gate-error" id="gate-error"></div>
-    </form>
-  </div>
-</div>
+<body data-view="all">
 <div class="layout">
 
 <aside class="sidebar">
@@ -455,7 +444,6 @@ body[data-view="nonfunded"] [data-tag="funded"]{opacity:0.4}
     <a class="rec-summary-card" href="#recommendations"><div class="rsc-tag">06 &middot; Well-being</div><h4>Formalise soft-skills training and psychological support as a named, evaluated feature of coaching.</h4></a>
   </div>
 
-  <p class="dl-note">Draft dashboard for internal navigation of the #SheFUND consultancy report. Content is drawn directly from the full written report (linked in the sidebar).</p>
   <div class="logo-strip-page"><img src="she%20logo.png" alt="#SheDIDIT"><img src="EMN_logo.png" alt="European Microfinance Network"><img src="Maria_Nowak_Fellowship_logo.png" alt="Maria Nowak Research Fellowship"><img src="Unibo_Logo.png" alt="Universita di Bologna"></div>
 </section>
 
@@ -1097,46 +1085,6 @@ body[data-view="nonfunded"] [data-tag="funded"]{opacity:0.4}
       });
     }
   }
-})();
-</script>
-<script>
-(function(){
-  var HASH = '777abbc10ddf9551bf53465886aa3735ae687df3c3bacf08fa300736422cc21b';
-  var KEY = 'sf_dashboard_unlocked';
-
-  function sha256Hex(text){
-    var data = new TextEncoder().encode(text);
-    return crypto.subtle.digest('SHA-256', data).then(function(buf){
-      return Array.from(new Uint8Array(buf)).map(function(b){ return b.toString(16).padStart(2,'0'); }).join('');
-    });
-  }
-
-  function unlock(){
-    document.body.classList.remove('gated');
-  }
-
-  if (localStorage.getItem(KEY) === HASH) {
-    unlock();
-  }
-
-  var form = document.getElementById('gate-form');
-  var input = document.getElementById('gate-input');
-  var error = document.getElementById('gate-error');
-
-  form.addEventListener('submit', function(e){
-    e.preventDefault();
-    sha256Hex(input.value).then(function(hex){
-      if (hex === HASH) {
-        localStorage.setItem(KEY, HASH);
-        error.textContent = '';
-        unlock();
-      } else {
-        error.textContent = 'Incorrect password.';
-        input.value = '';
-        input.focus();
-      }
-    });
-  });
 })();
 </script>
 </body>
