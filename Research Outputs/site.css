@@ -288,3 +288,14 @@ body:not(.gated) #gate{display:none}
   font-family:'DM Sans',sans-serif;font-size:0.78rem;color:var(--rose-deep);
   margin-top:12px;min-height:1em;
 }
+
+/* ---- Download report button (sidebar) ---- */
+.sidebar .download-link{
+  display:flex;align-items:center;justify-content:center;gap:8px;
+  font-family:'DM Sans',sans-serif;font-size:0.8rem;font-weight:600;
+  color:var(--rose-deep);background:#fff;text-decoration:none;
+  margin:-8px 0 22px;padding:10px 12px;border-radius:8px;
+  box-shadow:0 2px 8px rgba(0,0,0,0.12);transition:background 0.15s ease, transform 0.15s ease;
+}
+.sidebar .download-link:hover{background:var(--blush-light);transform:translateY(-1px)}
+.sidebar .download-link svg{flex-shrink:0}
