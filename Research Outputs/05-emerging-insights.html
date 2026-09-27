@@ -8,19 +8,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,600;0,700;0,800;1,400;1,600&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="site.css">
 </head>
-<body class="gated">
-<div id="gate">
-  <div class="gate-card">
-    <h1>#SheFUND Consultancy Report</h1>
-    <p>This report is shared privately. Enter the password to continue.</p>
-    <form id="gate-form" autocomplete="off">
-      <input type="password" id="gate-input" placeholder="Password" autofocus>
-      <button type="submit">Enter</button>
-      <div class="gate-error" id="gate-error"></div>
-    </form>
-  </div>
-</div>
-
+<body>
 <div class="layout">
 <aside class="sidebar">
   <div class="brand">#SheFUND</div>
@@ -90,45 +78,5 @@
   <div class="logo-strip-page"><img src="she%20logo.png" alt="#SheDIDIT"><img src="EMN_logo.png" alt="European Microfinance Network"><img src="Maria_Nowak_Fellowship_logo.png" alt="Maria Nowak Research Fellowship"><img src="Unibo_Logo.png" alt="Universita di Bologna"></div>
 </main>
 </div>
-<script>
-(function(){
-  var HASH = '777abbc10ddf9551bf53465886aa3735ae687df3c3bacf08fa300736422cc21b';
-  var KEY = 'sf_dashboard_unlocked';
-
-  function sha256Hex(text){
-    var data = new TextEncoder().encode(text);
-    return crypto.subtle.digest('SHA-256', data).then(function(buf){
-      return Array.from(new Uint8Array(buf)).map(function(b){ return b.toString(16).padStart(2,'0'); }).join('');
-    });
-  }
-
-  function unlock(){
-    document.body.classList.remove('gated');
-  }
-
-  if (localStorage.getItem(KEY) === HASH) {
-    unlock();
-  }
-
-  var form = document.getElementById('gate-form');
-  var input = document.getElementById('gate-input');
-  var error = document.getElementById('gate-error');
-
-  form.addEventListener('submit', function(e){
-    e.preventDefault();
-    sha256Hex(input.value).then(function(hex){
-      if (hex === HASH) {
-        localStorage.setItem(KEY, HASH);
-        error.textContent = '';
-        unlock();
-      } else {
-        error.textContent = 'Incorrect password.';
-        input.value = '';
-        input.focus();
-      }
-    });
-  });
-})();
-</script>
 </body>
 </html>
